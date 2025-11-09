@@ -1,0 +1,23 @@
+// To create a new gitignore file, follow these steps:
+dotnet new gitignore
+
+// Configuring a new build configuration in Visual Studio:
+1. Create a new Solution Item Directory.Build.props. To apply settings to all projects in the solution.
+2. Central Package Management: Create a NuGet.config file in the solution root to manage package versions centrally.
+3. Adding the .editorconfig file: Create a .editorconfig file in the solution root to enforce coding styles and conventions across all projects.
+4. Adding Docker Support: Right-click on the project in Solution Explorer, select "Add" > "Docker Support" to containerize your application.
+5. Adding Docker Orchestration Support: Right-click on the solution in Solution Explorer, select "Add" > "Container Orchestration Support" to manage multi-container applications and setting the ports.
+6. Adding OpenTelemetry Support: Install the OpenTelemetry NuGet packages and configure tracing and metrics in your application startup code.
+	OpenTelemetry.Extensions.Hosting
+	OpenTelemetry.Instrumentation.Http
+	OpenTelemetry.Exporter.OpenTelemetryProtocol
+	OpenTelemetry.Instrumentation.AspNetCore
+	OpenTelemetry.Instrumentation.Runtime
+Configure OpenTelemetry in Program.cs or Startup.cs to collect and export telemetry data.
+It can be consumed by Seq or 
+
+// Open Api Url
+https://localhost:5001/openapi/v1.json
+
+// Aspire dashboard Url
+http://localhost:18888
