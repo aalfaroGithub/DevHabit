@@ -26,11 +26,11 @@ internal static class HabitQueries
             Status = h.Status,
             IsArchived = h.IsArchived,
             EndDate = h.EndDate,
-            Milestone = h.Milestone != null ? new MilestoneDto
+            Milestone = h.Milestone == null ? null : new MilestoneDto
             {
                 Target = h.Milestone.Target,
                 Current = h.Milestone.Current
-            } : null,
+            },
             CreatedAtUtc = h.CreatedAtUtc,
             UpdatedAtUtc = h.UpdatedAtUtc,
             LastCompletedAtUtc = h.LastCompletedAtUtc
@@ -58,11 +58,11 @@ internal static class HabitQueries
             Status = h.Status,
             IsArchived = h.IsArchived,
             EndDate = h.EndDate,
-            Milestone = h.Milestone != null ? new MilestoneDto
+            Milestone = h.Milestone == null ? null : new MilestoneDto
             {
                 Target = h.Milestone.Target,
                 Current = h.Milestone.Current
-            } : null,
+            },
             CreatedAtUtc = h.CreatedAtUtc,
             UpdatedAtUtc = h.UpdatedAtUtc,
             LastCompletedAtUtc = h.LastCompletedAtUtc,
@@ -91,11 +91,11 @@ internal static class HabitQueries
             Status = h.Status,
             IsArchived = h.IsArchived,
             EndDate = h.EndDate,
-            Milestone = h.Milestone != null ? new MilestoneDto
+            Milestone = h.Milestone == null ? null : new MilestoneDto
             {
                 Target = h.Milestone.Target,
                 Current = h.Milestone.Current
-            } : null,
+            },
             CreatedAt = h.CreatedAtUtc,
             UpdatedAt = h.UpdatedAtUtc,
             LastCompletedAt = h.LastCompletedAtUtc,

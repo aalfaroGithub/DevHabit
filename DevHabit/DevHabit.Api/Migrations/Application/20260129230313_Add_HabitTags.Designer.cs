@@ -81,12 +81,10 @@ namespace DevHabit.Api.Migrations.Application
             modelBuilder.Entity("DevHabit.Api.Entities.HabitTag", b =>
                 {
                     b.Property<string>("HabitId")
-                        .HasMaxLength(500)
                         .HasColumnType("character varying(500)")
                         .HasColumnName("habit_id");
 
                     b.Property<string>("TagId")
-                        .HasMaxLength(500)
                         .HasColumnType("character varying(500)")
                         .HasColumnName("tag_id");
 

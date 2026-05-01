@@ -17,8 +17,8 @@ namespace DevHabit.Api.Migrations.Application
                 schema: "dev_habit",
                 columns: table => new
                 {
-                    habit_id = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
-                    tag_id = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
+                    habit_id = table.Column<string>(type: "character varying(500)", nullable: false),
+                    tag_id = table.Column<string>(type: "character varying(500)", nullable: false),
                     created_at_utc = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>

@@ -4,18 +4,24 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DevHabit.Api.Database.Configurations;
 
-public class TagConfiguration : IEntityTypeConfiguration<Tag>
+public sealed class TagConfiguration : IEntityTypeConfiguration<Tag>
 {
     public void Configure(EntityTypeBuilder<Tag> builder)
     {
         builder.HasKey(t => t.Id);
 
         builder.Property(t => t.Id).HasMaxLength(500);
+        builder.Property(t => t.UserId).HasMaxLength(500);
 
         builder.Property(t => t.Name).IsRequired().HasMaxLength(50);
 
         builder.Property(t => t.Description).HasMaxLength(500);
 
-        builder.HasIndex(t => new { t.Name }).IsUnique();
+        // Now this index allow includes the UserId, so this allow different users have tags with the same name, but a single user can't have two tags with the same name
+        builder.HasIndex(t => new { t.UserId, t.Name }).IsUnique();
+
+        builder.HasOne<User>()
+            .WithMany()
+            .HasForeignKey(t => t.UserId);
     }
 }
