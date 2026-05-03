@@ -49,6 +49,10 @@ public sealed class TagsController(
         if (acceptHeader.IncludeLinks)
         {
             tagsCollectionDto.Links = CreateLinksForTags(); //tagsCollectionDto.Items.Count
+			foreach (TagDto tagDto in tagsCollectionDto.Items)
+            {
+                tagDto.Links = CreateLinksForTag(tagDto.Id);
+            }
         }
 
         return Ok(tagsCollectionDto);
