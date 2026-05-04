@@ -48,7 +48,7 @@ public sealed class TagsController(
 
         if (acceptHeader.IncludeLinks)
         {
-            tagsCollectionDto.Links = CreateLinksForTags(); //tagsCollectionDto.Items.Count
+            tagsCollectionDto.Links = CreateLinksForTags(tagsCollectionDto.Items.Count);
 			foreach (TagDto tagDto in tagsCollectionDto.Items)
             {
                 tagDto.Links = CreateLinksForTag(tagDto.Id);
@@ -181,13 +181,18 @@ public sealed class TagsController(
         return NoContent();
     }
 
-    private List<LinkDto> CreateLinksForTags()
+    private List<LinkDto> CreateLinksForTags(int tagsCount)
     {
         List<LinkDto> links =
         [
             linkService.Create(nameof(GetTags), "self", HttpMethods.Get),
-            linkService.Create(nameof(CreateTag), "create", HttpMethods.Post)
         ];
+
+        // To improve this login, we can move this limit to a configuration file or database, so it can be easily changed without modifying the code
+        if (tagsCount < 5)
+        {
+            links.Add(linkService.Create(nameof(CreateTag), "create", HttpMethods.Post));
+        }
 
         return links;
     }

@@ -484,4 +484,4 @@ $RECYCLE.BIN/
 *.swp
 
 .containers
-/DevHabit/DevHabit.Api/Commnets.txt
+/DevHabit/DevHabit.Api/*.txt
