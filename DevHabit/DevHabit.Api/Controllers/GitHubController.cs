@@ -3,6 +3,7 @@ using DevHabit.Api.DTOs.Common;
 using DevHabit.Api.DTOs.GitHub;
 using DevHabit.Api.Entities;
 using DevHabit.Api.Services;
+using FluentValidation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,13 +19,17 @@ namespace DevHabit.Api.Controllers;
     CustomMediaTypeNames.Application.HateoasJsonV1)]
 public sealed class GitHubController(
     GitHubAccessTokenService gitHubAccessTokenService,
-    GitHubService gitHubService,
+    RefitGitHubService gitHubService,
     UserContext userContext,
     LinkService linkService) : ControllerBase
 {
     [HttpPut("personal-access-token")]
-    public async Task<IActionResult> StoreAccessToken(StoreGitHubAccessTokenDto storeGitHubAccessTokenDto)
+    public async Task<IActionResult> StoreAccessToken(
+    	StoreGitHubAccessTokenDto storeGitHubAccessTokenDto,
+    	IValidator<StoreGitHubAccessTokenDto> validator)
     {
+        await validator.ValidateAndThrowAsync(storeGitHubAccessTokenDto);
+
         string? userId = await userContext.GetUserIdAsync();
         if (string.IsNullOrWhiteSpace(userId))
         {

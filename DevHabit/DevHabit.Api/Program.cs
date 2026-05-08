@@ -12,7 +12,8 @@ builder
     .AddApplicationServices()
     .AddAuthenticationServices()
     .AddBackgroundJobs()
-    .AddCorsPolicy();
+    .AddCorsPolicy()
+    .AddRateLimiting();
 
 WebApplication app = builder.Build();
 
@@ -25,14 +26,19 @@ if (app.Environment.IsDevelopment())
     await app.SeedInitialDataAsync();
 }
 
-app.UseHttpsRedirection();
-
 app.UseExceptionHandler();
-
+app.UseHttpsRedirection();
 app.UseCors(CorsOptions.PolicyName);
+
+//app.UseResponseCaching();
+//app.UseOutputCache();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseRateLimiter(); // Implemented here to ensure to be applied after authentication and authorization, so that rate limits can be applied based on user identity or other factors.
+
+//app.UseMiddleware<ETagMiddleware>();
 
 app.MapControllers();
 
