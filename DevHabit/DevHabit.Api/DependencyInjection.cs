@@ -167,14 +167,15 @@ public static class DependencyInjection
         builder.Services.AddTransient<GitHubService>();
 
         // Standar Resilience Handler
-        builder.Services.AddHttpClient().ConfigureHttpClientDefaults(b => b.AddStandardResilienceHandler()); // Configure to send multiple http requests 
+        // Configure to send multiple http requests 
+        builder.Services.AddHttpClient().ConfigureHttpClientDefaults(b => b.AddStandardResilienceHandler());
         
         builder.Services.AddTransient<RefitGitHubService>();
         builder.Services
             .AddHttpClient("github")
             .ConfigureHttpClient(client =>
             {
-                client.BaseAddress = new Uri("https://api.github.com");
+                client.BaseAddress = new Uri(builder.Configuration.GetSection("GitHub:BaseUrl").Get<string>()!);
 
                 client.DefaultRequestHeaders
                     .UserAgent.Add(new ProductInfoHeaderValue("DevHabit", "1.0"));
@@ -191,7 +192,10 @@ public static class DependencyInjection
             {
                 ContentSerializer = new NewtonsoftJsonContentSerializer()
             })
-            .ConfigureHttpClient(client => client.BaseAddress = new Uri("https://api.github.com"));
+            .ConfigureHttpClient(client =>
+            {
+                client.BaseAddress = new Uri(builder.Configuration.GetSection("GitHub:BaseUrl").Get<string>()!);
+            });
             // Section commented because the Starndard Resilience Handler alread contains this approach.
             //.AddHttpMessageHandler<DelayHandler>(); 
             //.InternalRemoveAllResilienceHandlers()
@@ -225,6 +229,9 @@ public static class DependencyInjection
 
         builder.Services.Configure<GitHubAutomationOptions>(
             builder.Configuration.GetSection(GitHubAutomationOptions.SectionName));
+
+        builder.Services.Configure<TagsOptions>(
+            builder.Configuration.GetSection(TagsOptions.SectionName));
 
         builder.Services.AddSingleton<InMemoryETagStore>();
 

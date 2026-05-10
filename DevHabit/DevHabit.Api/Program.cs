@@ -35,11 +35,13 @@ app.UseCors(CorsOptions.PolicyName);
 
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.UseRateLimiter(); // Implemented here to ensure to be applied after authentication and authorization, so that rate limits can be applied based on user identity or other factors.
 
+app.UseUserContextEnrichment();
 //app.UseMiddleware<ETagMiddleware>();
 
 app.MapControllers();
 
 await app.RunAsync();
+
+public partial class Program;

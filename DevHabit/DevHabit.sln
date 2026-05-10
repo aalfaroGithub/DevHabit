@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36623.8
+# Visual Studio Version 18
+VisualStudioVersion = 18.5.11723.231
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevHabit.Api", "DevHabit.Api\DevHabit.Api.csproj", "{2B250155-0AA3-440F-8D4B-7581E8FBD58D}"
 EndProject
@@ -15,6 +15,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{81DDED9D-158B-E303-5F62-77A2896D2A5A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{FCB41D46-B1DF-469D-A1D5-E12587EF88D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevHabit.UnitTests", "DevHabit.UnitTests\DevHabit.UnitTests.csproj", "{09D34094-164B-427D-BD94-A8B8C47DF72C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevHabit.IntegrationTests", "DevHabit.IntegrationTests\DevHabit.IntegrationTests.csproj", "{A3B4158C-1533-47E0-90CF-F793A782C4CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevHabit.FunctionalTests", "DevHabit.FunctionalTests\DevHabit.FunctionalTests.csproj", "{4B8FB0B1-5997-4825-9E7D-5FD84392751E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,12 +38,27 @@ Global
 		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09D34094-164B-427D-BD94-A8B8C47DF72C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09D34094-164B-427D-BD94-A8B8C47DF72C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09D34094-164B-427D-BD94-A8B8C47DF72C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09D34094-164B-427D-BD94-A8B8C47DF72C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3B4158C-1533-47E0-90CF-F793A782C4CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3B4158C-1533-47E0-90CF-F793A782C4CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3B4158C-1533-47E0-90CF-F793A782C4CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3B4158C-1533-47E0-90CF-F793A782C4CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B8FB0B1-5997-4825-9E7D-5FD84392751E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B8FB0B1-5997-4825-9E7D-5FD84392751E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B8FB0B1-5997-4825-9E7D-5FD84392751E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B8FB0B1-5997-4825-9E7D-5FD84392751E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2B250155-0AA3-440F-8D4B-7581E8FBD58D} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{09D34094-164B-427D-BD94-A8B8C47DF72C} = {FCB41D46-B1DF-469D-A1D5-E12587EF88D3}
+		{A3B4158C-1533-47E0-90CF-F793A782C4CD} = {FCB41D46-B1DF-469D-A1D5-E12587EF88D3}
+		{4B8FB0B1-5997-4825-9E7D-5FD84392751E} = {FCB41D46-B1DF-469D-A1D5-E12587EF88D3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {254913B6-E798-4E0B-8C0B-45876418300C}

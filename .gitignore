@@ -485,3 +485,4 @@ $RECYCLE.BIN/
 
 .containers
 /DevHabit/DevHabit.Api/*.txt
+/DevHabit/DevHabit.UnitTests/Tests.txt

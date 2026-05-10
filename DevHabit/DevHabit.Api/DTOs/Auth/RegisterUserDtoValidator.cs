@@ -9,7 +9,7 @@ public sealed class RegisterUserDtoValidator : AbstractValidator<RegisterUserDto
         RuleFor(x => x.Email)
             .NotEmpty()
             .EmailAddress()
-            .MaximumLength(100);
+            .MaximumLength(255);
 
         RuleFor(x => x.Name)
             .NotEmpty()

@@ -164,6 +164,12 @@ export const EntriesPage: React.FC = () => {
         <h1 className="text-2xl font-semibold">My Entries</h1>
         <div className="space-x-4">
           <button
+            onClick={() => navigate('/entries/imports')}
+            className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 cursor-pointer"
+          >
+            Import Entries
+          </button>
+          <button
             onClick={() => {
               const createBatchLink = entriesResponse?.links?.find(
                 link => link.rel === 'create-batch'

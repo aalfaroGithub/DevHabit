@@ -9,8 +9,8 @@ public static class MiddlewareExtensions
         return app.UseMiddleware<ETagMiddleware>();
     }
 
-    //public static IApplicationBuilder UseUserContextEnrichment(this IApplicationBuilder app)
-    //{
-    //    return app.UseMiddleware<UserContextEnrichmentMiddleware>();
-    //}
+    public static IApplicationBuilder UseUserContextEnrichment(this IApplicationBuilder app)
+    {
+        return app.UseMiddleware<UserContextEnrichmentMiddleware>();
+    }
 }
