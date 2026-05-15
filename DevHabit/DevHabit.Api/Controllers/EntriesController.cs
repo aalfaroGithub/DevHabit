@@ -27,12 +27,23 @@ namespace DevHabit.Api.Controllers;
     CustomMediaTypeNames.Application.JsonV1,
     CustomMediaTypeNames.Application.HateoasJson,
     CustomMediaTypeNames.Application.HateoasJsonV1)]
+[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+[ProducesResponseType(StatusCodes.Status403Forbidden)]
 public sealed class EntriesController(
     ApplicationDbContext dbContext,
     LinkService linkService,
     UserContext userContext) : ControllerBase
 {
+    /// <summary>
+    /// Retrieves a paginated list of entries
+    /// </summary>
+    /// <param name="query">Query parameters for filtering and pagination</param>
+    /// <param name="sortMappingProvider">Provider for sorting mappings</param>
+    /// <param name="dataShapingService">Service for data shaping</param>
+    /// <returns>Paginated list of entries</returns>
     [HttpGet]
+    [ProducesResponseType<PaginationResult<EntryDto>>(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetEntries(
         [FromQuery] EntriesQueryParameters query,
         SortMappingProvider sortMappingProvider,
@@ -99,7 +110,15 @@ public sealed class EntriesController(
         return Ok(paginationResult);
     }
 
+    /// <summary>
+    /// Retrieves a cursor-based paginated list of entries
+    /// </summary>
+    /// <param name="query">Query parameters for filtering and cursor-based pagination</param>
+    /// <param name="dataShapingService">Service for data shaping</param>
+    /// <returns>Cursor-based paginated list of entries</returns>
     [HttpGet("cursor")]
+    [ProducesResponseType<CollectionResponse<EntryDto>>(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetEntriesCursor(
         [FromQuery] EntriesCursorQueryParameters query,
         DataShapingService dataShapingService)
@@ -169,7 +188,17 @@ public sealed class EntriesController(
         return Ok(paginationResult);
     }
 
+    /// <summary>
+    /// Retrieves a specific entry by ID
+    /// </summary>
+    /// <param name="id">The entry ID</param>
+    /// <param name="query">Query parameters for data shaping</param>
+    /// <param name="dataShapingService">Service for data shaping</param>
+    /// <returns>The requested entry</returns>
     [HttpGet("{id}")]
+    [ProducesResponseType<EntryDto>(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetEntry(
         string id,
         [FromQuery] EntryQueryParameters query,
@@ -209,8 +238,18 @@ public sealed class EntriesController(
         return Ok(shapedEntryDto);
     }
 
+    /// <summary>
+    /// Creates a new entry
+    /// </summary>
+    /// <param name="createEntryDto">The entry to create</param>
+    /// <param name="acceptHeader">Controls HATEOAS link generation</param>
+    /// <param name="validator">Validator for the create request</param>
+    /// <returns>The created entry</returns>
     [HttpPost]
     //[IdempotentRequest]
+    [ProducesResponseType<EntryDto>(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<EntryDto>> CreateEntry(
         CreateEntryDto createEntryDto,
         [FromHeader] AcceptHeaderDto acceptHeader,
@@ -251,7 +290,16 @@ public sealed class EntriesController(
 
     // Post /entries/batch or
     // Post /entries-collection -> 201 Created [Location /entries-collection?entryIds=[]]
+	/// <summary>
+    /// Creates a batch of entries
+    /// </summary>
+    /// <param name="createEntryBatchDto">The batch of entries to create</param>
+    /// <param name="acceptHeader">Controls HATEOAS link generation</param>
+    /// <param name="validator">Validator for the create batch request</param>
+    /// <returns>The created entries</returns>
     [HttpPost("batch")]
+    [ProducesResponseType<List<EntryDto>>(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<List<EntryDto>>> CreateEntryBatch(
         CreateEntryBatchDto createEntryBatchDto,
         [FromHeader] AcceptHeaderDto acceptHeader,
@@ -300,7 +348,16 @@ public sealed class EntriesController(
         return CreatedAtAction(nameof(GetEntries), entryDtos);
     }
 
+    /// <summary>
+    /// Updates an entry
+    /// </summary>
+    /// <param name="id">The entry ID</param>
+    /// <param name="updateEntryDto">The update details</param>
+    /// <param name="validator">Validator for the update request</param>
+    /// <returns>No content on success</returns>
     [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> UpdateEntry(
         string id,
         UpdateEntryDto updateEntryDto,
@@ -328,7 +385,14 @@ public sealed class EntriesController(
         return NoContent();
     }
 
+    /// <summary>
+    /// Archives an entry
+    /// </summary>
+    /// <param name="id">The entry ID</param>
+    /// <returns>No content on success</returns>
     [HttpPut("{id}/archive")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> ArchiveEntry(string id)
     {
         string? userId = await userContext.GetUserIdAsync();
@@ -352,7 +416,14 @@ public sealed class EntriesController(
         return NoContent();
     }
 
+    /// <summary>
+    /// Unarchives an entry
+    /// </summary>
+    /// <param name="id">The entry ID</param>
+    /// <returns>No content on success</returns>
     [HttpPut("{id}/un-archive")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> UnArchiveEntry(string id)
     {
         string? userId = await userContext.GetUserIdAsync();
@@ -376,7 +447,14 @@ public sealed class EntriesController(
         return NoContent();
     }
 
+    /// <summary>
+    /// Deletes an entry
+    /// </summary>
+    /// <param name="id">The entry ID</param>
+    /// <returns>No content on success</returns>
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> DeleteEntry(string id)
     {
         string? userId = await userContext.GetUserIdAsync();
@@ -399,7 +477,12 @@ public sealed class EntriesController(
         return NoContent();
     }
 
+    /// <summary>
+    /// Retrieves entry statistics for the current user
+    /// </summary>
+    /// <returns>Entry statistics including streaks and daily counts</returns>
     [HttpGet("stats")]
+    [ProducesResponseType<EntryStatsDto>(StatusCodes.Status200OK)]
     public async Task<ActionResult<EntryStatsDto>> GetStats()
     {
         string? userId = await userContext.GetUserIdAsync();

@@ -1,6 +1,8 @@
 using DevHabit.Api;
 using DevHabit.Api.Extensions;
 using DevHabit.Api.Settings;
+using Scalar.AspNetCore;
+//using Scalar.AspNetCore;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -17,9 +19,20 @@ builder
 
 WebApplication app = builder.Build();
 
+app.UseSwagger();
+app.UseSwaggerUI();
+/*options =>
+{
+    options.SwaggerEndpoint("/openapi/v1.json", "v1");
+}*/
+app.MapScalarApiReference(options =>
+{
+    options.WithOpenApiRoutePattern("/swagger/1.0/swagger.json");
+});
+
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    //app.MapOpenApi();
 
     await app.ApplyMigrationsAsync();
 

@@ -11,7 +11,7 @@ namespace DevHabit.Api.Migrations.Application
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            /// Because we are adding a new non-nullable column to the tables, we need to drop the data
+            // Because we are adding a new non-nullable column to the tables, we need to drop the data
             migrationBuilder.Sql(
                 """
                 DELETE FROM dev_habit.habit_tags;
