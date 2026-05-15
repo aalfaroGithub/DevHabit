@@ -145,7 +145,8 @@ public static class DependencyInjection
             options.IncludeFormattedMessage = true;
         });
 
-        if(builder.Environment.IsDevelopment())
+        // Using Azure Monitor in production and OtlpExporter in development to be able to test telemetry data locally with tools like Seq or Aspire.
+        if (builder.Environment.IsDevelopment())
         {
             builder.Services.AddOpenTelemetry().UseOtlpExporter();
         }
