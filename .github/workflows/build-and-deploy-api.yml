@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - 'DevHabit/**'
+      - "DevHabit/**"
 
 env:
   AZURE_WEBAPP_NAME: devhabit-api
@@ -16,7 +16,7 @@ env:
   SOLUTION_PATH: "DevHabit.sln"
   API_PROJECT_PATH: "DevHabit.Api"
   PUBLISH_DIR: "./publish"
-  CONNECTIONSTRINGS__DATABASE: "<Replaced by bundle>"
+  CONNECTIONSTRINGS__DATABASE: "<Replaced by Bundle>"
 
 jobs:
   build-and-test:
@@ -72,6 +72,9 @@ jobs:
 
       - name: Install EF Core CLI
         run: dotnet tool install --global dotnet-ef
+
+      - name: Restore
+        run: dotnet restore ${{ env.SOLUTION_PATH }}
 
       - name: Create migration bundle
         run: |
