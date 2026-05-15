@@ -11,20 +11,20 @@ namespace DevHabit.IntegrationTests.Tests;
 
 public sealed class CrossCuttingTests(DevHabitWebAppFactory factory) : IntegrationTestFixture(factory)
 {
-    public static TheoryData<string> ProtectedEndpoints =>
-    [
+    public static TheoryData<string> ProtectedEndpoints => new()
+    {
         Routes.Habits.GetAll,
         Routes.Entries.GetAll,
         Routes.Tags.GetAll,
         Routes.GitHub.GetProfile,
         Routes.EntryImports.GetAll
-    ];
+    };
 
-    public static TheoryData<string> MediaTypes =>
-    [
+    public static TheoryData<string> MediaTypes => new()
+    {
         MediaTypeNames.Application.Json,
         CustomMediaTypeNames.Application.HateoasJson
-    ];
+    };
 
     [Theory]
     [MemberData(nameof(ProtectedEndpoints))]
@@ -113,4 +113,4 @@ public sealed class CrossCuttingTests(DevHabitWebAppFactory factory) : Integrati
         Assert.True(problemDetails.ContainsKey("status"));
         Assert.True(problemDetails.ContainsKey("requestId"));
     }
-} 
+}
